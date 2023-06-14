@@ -2,6 +2,8 @@ import logo from './logo.svg';
 import './App.css';
 import {createBrowserRouter, RouterProvider} from 'react-router-dom'
 import Layout from './components/Layout';
+import Login from './components/Login';
+import Register from './components/Register';
 
 
 function App() {
@@ -9,6 +11,14 @@ function App() {
     {
       path: "/",
       element: <Layout />
+    },
+    {
+      path: "/login",
+      element: <Login />
+    },
+    {
+      path: "/register",
+      element: <Register />
     }
   ])
   return (
