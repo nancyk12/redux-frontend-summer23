@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, {useState} from 'react';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -14,16 +14,34 @@ import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 
 export default function Register() {
+
+  const [pwdMatch, setPwdMatch] = useState({
+    error: false,
+    message: ''
+  })
+
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    console.log(data)
-    console.log({
+    
+    let userObj = {
       firstname: data.get('firstName'),
       lastname: data.get('lastName'),
       email: data.get('email'),
       password: data.get('password'),
-    });
+    };
+
+    userObj.password !== data.get('password2') ? 
+    setPwdMatch({
+      error: true,
+      message: "Passwords do not Match"
+    })
+    :
+    setPwdMatch({
+      error: false,
+      message: ''
+    })
+
   };
 
   return (
@@ -98,6 +116,8 @@ export default function Register() {
                   type="password"
                   id="password2"
                   autoComplete="new-password"
+                  error={pwdMatch.error}
+                  helperText={pwdMatch.message}
                 />
               </Grid>
               {/* <Grid item xs={12}>
@@ -113,7 +133,7 @@ export default function Register() {
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
             >
-              Sign Up
+              Register
             </Button>
             <Grid container justifyContent="flex-end">
               <Grid item>
