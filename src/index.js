@@ -6,6 +6,8 @@ import reportWebVitals from './reportWebVitals';
 import { ThemeProvider } from '@emotion/react';
 import theme from './theme'
 import { CssBaseline } from '@mui/material';
+import store from './redux/store'
+import {Provider} from 'react-redux'
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -13,7 +15,9 @@ root.render(
     <ThemeProvider theme={theme}> 
     {/* CSSBaseline for browsder compatibility */}
       <CssBaseline /> 
-      <App />
+        <Provider store={store}>
+          <App />
+        </Provider>
     </ThemeProvider>
   </React.StrictMode>
 );
