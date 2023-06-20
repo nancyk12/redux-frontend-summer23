@@ -47,7 +47,7 @@ export default function Register() {
       message: ''
     })
     
-    dispatch(registerUser(userObj))
+    (userObj.password === data.get('password2')) && dispatch(registerUser(userObj))
 
   };
 
