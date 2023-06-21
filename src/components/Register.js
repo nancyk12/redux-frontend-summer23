@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -36,17 +36,19 @@ export default function Register() {
       password: data.get('password'),
     };
 
-    userObj.password !== data.get('password2') ? 
-    setPwdMatch({
-      error: true,
-      message: "Passwords do not Match"
-    })
-    :
-    setPwdMatch({
-      error: false,
-      message: ''
-    })
+    if (userObj.password !== data.get('password2')) {
+      setPwdMatch({
+        error: true,
+        message: "Passwords do not Match"
+      })
+    } else {
+      setPwdMatch({
+          error: false,
+          message: ''
+        })
+    }
     
+  
     (userObj.password === data.get('password2')) && dispatch(registerUser(userObj))
 
   };
