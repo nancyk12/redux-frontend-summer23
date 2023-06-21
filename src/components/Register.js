@@ -46,10 +46,10 @@ export default function Register() {
           error: false,
           message: ''
         })
+      dispatch(registerUser(userObj))
     }
-    
-  
-    (userObj.password === data.get('password2')) && dispatch(registerUser(userObj))
+      
+    // (userObj.password === data.get('password2')) && dispatch(registerUser(userObj))
 
   };
 
