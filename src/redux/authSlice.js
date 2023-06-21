@@ -6,15 +6,22 @@ export const authSlice = createSlice({
         isAuth: false
     },
     reducers: {
-    //   authSuccess: (state) => {
-    //     state.isAuth = true
-    //   },
-    //   authFailure: (state) => {
-    //     state.isAuth = false
-    //   },
+      authSuccess: (state) => {
+        state.isAuth = true
+      },
+      authFailure: (state) => {
+        state.isAuth = false
+      },
       //same as above
-      authSuccess: state => state.isAuth = true,
-      authFailure: state => state.isAuth = false
+      // authSuccess: state => state.isAuth = true,
+      // authFailure: state => state.isAuth = false
+      //
+      // or return
+      // authSuccess: (state) => {
+      //   return {
+      //     isAuth: true
+      //   }
+      // },
     }
 })
 

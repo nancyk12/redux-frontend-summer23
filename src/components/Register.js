@@ -36,6 +36,17 @@ export default function Register() {
       password: data.get('password'),
     };
 
+  //  (userObj.password !== data.get('password2')) ?
+  //     setPwdMatch({
+  //       error: true,
+  //       message: "Passwords do not Match"
+  //     })
+  //   :
+  //     setPwdMatch({
+  //         error: false,
+  //         message: ''
+  //       })
+    
     if (userObj.password !== data.get('password2')) {
       setPwdMatch({
         error: true,
@@ -56,7 +67,6 @@ export default function Register() {
   return (
 
       <Container component="main" maxWidth="xs">
-
         <Box
           sx={{
             marginTop: 8,

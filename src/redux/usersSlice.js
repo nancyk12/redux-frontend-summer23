@@ -1,6 +1,6 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 import Axios from '../lib/Axios'
-import { RemoveShoppingCartRounded } from '@mui/icons-material'
+import { authSuccess } from './authSlice'
 
 //thunk middleware
 //createAsyncThunk, first parameter is the action.type, then the function
@@ -23,6 +23,25 @@ export const registerUser = createAsyncThunk('user/registerUser', async payloadD
 
 })
 
+//login
+export const login = createAsyncThunk('user/login', async(userData, thunkAPI) => {
+    try {
+        let response = await Axios.post('/users/login', userData)
+
+        localStorage.setItem('jwtToken', response.data.token)
+
+        //dispatch authSuccess with Thunk API
+        thunkAPI.dispatch(authSuccess())
+
+        return response.data
+
+    } catch (error) {
+        return thunkAPI.rejectWithValue(error.response.data)
+    }
+})
+
+
+
 export const usersSlice = createSlice({
     name: 'user',
     initialState: {
@@ -40,18 +59,41 @@ export const usersSlice = createSlice({
     extraReducers: builder => {
         builder
             .addCase(registerUser.fulfilled, (state, action) => {
-                console.log(action.payload)
-                // state = {
+                // console.log(action.payload)
+                // whole state replacement - use a return
+                // return {
                 //     email: action.payload.data.userObj.email,
                 //     firstname: action.payload.data.userObj.firstname,
                 //     lastname: action.payload.data.userObj.lastname,
                 //     password: '',
                 //     message: action.payload.data.message
                 // }
-                state = action.payload
+
+                // modifying the state directly
+                // state.firstname = action.payload.firstname 
+                // state.lastname = action.payload.lastname
+                // state.email = action.payload.email
+                // state.message = action.payload.message
+                // state.password = ''
+
+                return {
+                    ...action.payload,
+                    password: ''
+                }
             })
+            // .addCase(registerUser.fulfilled, (state, action) => action.payload)
             .addCase(registerUser.rejected, () => {
                 console.log('!@-------registerUser Error!-------@!')
+            })
+            .addCase(login.fulfilled, (state, action)=> {
+                state.firstname = action.payload.user.firstname 
+                state.lastname = action.payload.user.lastname
+                state.email = action.payload.user.email
+                state.message = action.payload.message
+                state.password = ''
+            })
+            .addCase(login.rejected, (state, action) => {
+                state.message = action.payload
             })
     }
 })
