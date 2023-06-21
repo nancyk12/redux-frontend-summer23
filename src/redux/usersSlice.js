@@ -52,9 +52,14 @@ export const usersSlice = createSlice({
         message: ''
     },
     //syncronous set state
-    // reducers: {
-
-    // },
+    reducers: {
+        setUser: (state, action) => {
+            return {
+                ...action.payload,
+                password: ''
+            }
+        }
+    },
     //asycronous set state
     extraReducers: builder => {
         builder
@@ -98,6 +103,6 @@ export const usersSlice = createSlice({
     }
 })
 
-//  export const {} = usersSlice.actions
+ export const { setUser } = usersSlice.actions
 
 export default usersSlice.reducer
