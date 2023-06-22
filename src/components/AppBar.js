@@ -14,7 +14,7 @@ import MenuItem from '@mui/material/MenuItem';
 import AdbIcon from '@mui/icons-material/Adb';
 
 const pages = ['Products', 'Cart'];
-const settings = ['Profile', 'Account', 'Logout'];
+const settings = ['Profile', 'Account', 'Security', 'Logout'];
 
 function ResponsiveAppBar() {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
@@ -34,7 +34,12 @@ function ResponsiveAppBar() {
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
   };
-
+  const onMenuClick = (menuItem) => {
+    if (menuItem === 'Logout') {
+      alert()
+    }
+    (menuItem === 'Security') && alert('Security')
+  }
   return (
     <AppBar position="static">
       <Container maxWidth="xl">
@@ -149,7 +154,10 @@ function ResponsiveAppBar() {
             >
               {settings.map((setting) => (
                 <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                  <Typography textAlign="center">{setting}</Typography>
+                  <Typography
+                   onClick = {() => onMenuClick(setting)} 
+                   textAlign="center"
+                   >{setting}</Typography>
                 </MenuItem>
               ))}
             </Menu>

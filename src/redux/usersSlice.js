@@ -63,6 +63,9 @@ export const usersSlice = createSlice({
                 ...action.payload,
                 password: ''
             }
+        },
+        resetStatus: (state) => {
+            state.status = null
         }
     },
     //asycronous set state
@@ -88,12 +91,17 @@ export const usersSlice = createSlice({
 
                 return {
                     ...action.payload,
-                    password: ''
+                    password: '',
+                    status: 'fulfilled'
                 }
             })
             // .addCase(registerUser.fulfilled, (state, action) => action.payload)
-            .addCase(registerUser.rejected, () => {
+            .addCase(registerUser.rejected, (state) => {
                 console.log('!@-------registerUser Error!-------@!')
+                state.status = 'rejected'
+            })
+            .addCase(registerUser.pending, (state) => {
+                state.status = 'pending'
             })
             .addCase(login.fulfilled, (state, action)=> {
                 state.firstname = action.payload.user.firstname 
@@ -113,6 +121,6 @@ export const usersSlice = createSlice({
     }
 })
 
- export const { setUser } = usersSlice.actions
+ export const { setUser, resetStatus } = usersSlice.actions
 
 export default usersSlice.reducer

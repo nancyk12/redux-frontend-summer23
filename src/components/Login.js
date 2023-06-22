@@ -13,7 +13,7 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import {useDispatch, useSelector} from 'react-redux'
-import { login } from '../redux/usersSlice'
+import { login, resetStatus } from '../redux/usersSlice'
 import { CircularProgress } from '@mui/material';
 import {redirect, useNavigate} from 'react-router-dom'
 
@@ -26,6 +26,7 @@ export default function Login() {
 
   React.useEffect(() => {
     if ( status === 'fulfilled' ) {
+      dispatch(resetStatus())
       navigate('/', {replace: true})
     }
   }, [status])

@@ -13,12 +13,23 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { useSelector, useDispatch } from 'react-redux'
-import { registerUser } from '../redux/usersSlice'
+import { registerUser, resetStatus } from '../redux/usersSlice'
+import { CircularProgress } from '@mui/material';
+import { useNavigate } from 'react-router-dom'
 
 export default function Register() {
 
   const users = useSelector( state => state.users)
+  const status = useSelector( state => state.users.status)
   const dispatch = useDispatch()
+  const navigate = useNavigate()
+
+  React.useEffect(() => {
+    if (status === 'fulfilled') {
+      dispatch(resetStatus())
+      navigate("/login", {replace: true})
+    }
+  })
 
   const [pwdMatch, setPwdMatch] = useState({
     error: false,
@@ -152,7 +163,7 @@ export default function Register() {
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
             >
-              Register
+              {(status === 'pending') ? <CircularProgress /> : "Register" }
             </Button>
             <Grid container justifyContent="flex-end">
               <Grid item>
