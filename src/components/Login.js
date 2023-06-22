@@ -15,14 +15,23 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import {useDispatch, useSelector} from 'react-redux'
 import { login } from '../redux/usersSlice'
 import { CircularProgress } from '@mui/material';
+import {redirect, useNavigate} from 'react-router-dom'
 
 
 export default function Login() {
   const users = useSelector(state => state.users)
   const status = useSelector(state => state.users.status)
   const dispatch = useDispatch()
+  const navigate = useNavigate()
 
+  React.useEffect(() => {
+    if ( status === 'fulfilled' ) {
+      navigate('/', {replace: true})
+    }
+  }, [status])
 
+  const [isChecked, setIsChecked] = React.useState(true)
+  
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -31,9 +40,23 @@ export default function Login() {
     //   email: data.get('email'),
     //   password: data.get('password'),
     // });
+
+    //frontend handling the remember me
+    // let userObj = {
+    //   email: data.get('email'),
+    //   password: data.get('password'),
+    // };
+
+    // dispatch(login({
+    //   userObj: userObj,
+    //   isRemember: isChecked
+    // }))
+
+    //handle remember me in the backend
     let userObj = {
       email: data.get('email'),
       password: data.get('password'),
+      isRemember: isChecked
     };
 
     dispatch(login(userObj))
@@ -80,7 +103,13 @@ export default function Login() {
               autoComplete="current-password"
             />
             <FormControlLabel
-              control={<Checkbox value="remember" color="primary" />}
+              control={
+              <Checkbox 
+                checked={isChecked} 
+                onChange={() => setIsChecked(!isChecked)} 
+                name="remember" 
+                color="primary" />
+              }
               label="Remember me"
             />
             <Button
@@ -88,8 +117,8 @@ export default function Login() {
               fullWidth
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
-            >
-              { (status === 'pending') ? <CircularProgress /> : 'Sign In' }
+            > { (status === 'pending') ? <CircularProgress /> : 'Sign In' }
+             
               
             </Button>
             <Grid container>

@@ -26,7 +26,11 @@ export const registerUser = createAsyncThunk('user/registerUser', async payloadD
 //login
 export const login = createAsyncThunk('user/login', async(userData, thunkAPI) => {
     try {
+        
         let response = await Axios.post('/users/login', userData)
+        // console.log(userData.isRemember)
+        //remember me button checked
+        // userData.isRemember && localStorage.setItem('jwtToken', response.data.token)
 
         localStorage.setItem('jwtToken', response.data.token)
 
