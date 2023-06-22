@@ -45,7 +45,6 @@ export const login = createAsyncThunk('user/login', async(userData, thunkAPI) =>
 })
 
 
-
 export const usersSlice = createSlice({
     name: 'user',
     initialState: {
@@ -66,6 +65,16 @@ export const usersSlice = createSlice({
         },
         resetStatus: (state) => {
             state.status = null
+        },
+        resetUser: (state) => {
+            return {
+                email: '',
+                password: '',
+                firstname: '',
+                lastname: '',
+                message: 'User Logged Out!',
+                status: null
+            }
         }
     },
     //asycronous set state
@@ -121,6 +130,6 @@ export const usersSlice = createSlice({
     }
 })
 
- export const { setUser, resetStatus } = usersSlice.actions
+ export const { setUser, resetStatus, resetUser } = usersSlice.actions
 
 export default usersSlice.reducer
