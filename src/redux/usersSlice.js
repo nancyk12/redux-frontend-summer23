@@ -49,7 +49,8 @@ export const usersSlice = createSlice({
         password: '',
         firstname: '',
         lastname: '',
-        message: ''
+        message: '',
+        status: null
     },
     //syncronous set state
     reducers: {
@@ -96,9 +97,14 @@ export const usersSlice = createSlice({
                 state.email = action.payload.user.email
                 state.message = action.payload.message
                 state.password = ''
+                state.status = 'fulfilled'
+            })
+            .addCase(login.pending, (state) => {
+                state.status = 'pending'
             })
             .addCase(login.rejected, (state, action) => {
                 state.message = action.payload
+                state.status = 'rejected'
             })
     }
 })

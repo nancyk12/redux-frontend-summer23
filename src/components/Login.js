@@ -14,11 +14,15 @@ import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import {useDispatch, useSelector} from 'react-redux'
 import { login } from '../redux/usersSlice'
+import { CircularProgress } from '@mui/material';
 
 
 export default function Login() {
   const users = useSelector(state => state.users)
+  const status = useSelector(state => state.users.status)
   const dispatch = useDispatch()
+
+
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -85,7 +89,8 @@ export default function Login() {
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
             >
-              Sign In
+              { (status === 'pending') ? <CircularProgress /> : 'Sign In' }
+              
             </Button>
             <Grid container>
               <Grid item xs>
