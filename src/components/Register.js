@@ -16,6 +16,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import { registerUser, resetStatus } from '../redux/usersSlice'
 import { CircularProgress } from '@mui/material';
 import { useNavigate } from 'react-router-dom'
+import { registrationValidator } from '../lib/validator';
 
 export default function Register() {
 
@@ -35,6 +36,15 @@ export default function Register() {
     error: false,
     message: ''
   })
+  
+  const [isValid, setIsValid] = useState({
+    firstname: {error: false, message: ''},
+    lastname: {error: false, message: ''},
+    email: {error: false, message: ''},
+    password: {error: false, message: ''},
+  })
+
+
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -46,6 +56,11 @@ export default function Register() {
       email: data.get('email'),
       password: data.get('password'),
     };
+
+
+    const validatorObj = registrationValidator(userObj)
+    
+    setIsValid(validatorObj)
 
   //  (userObj.password !== data.get('password2')) ?
   //     setPwdMatch({
@@ -70,6 +85,8 @@ export default function Register() {
         })
       dispatch(registerUser(userObj))
     }
+
+    
       
     // (userObj.password === data.get('password2')) && dispatch(registerUser(userObj))
 
@@ -103,6 +120,10 @@ export default function Register() {
                   id="firstName"
                   label="First Name"
                   autoFocus
+                  // error={true}
+                  error={isValid.firstname.error}
+                  // helperText="Firstname is blank"
+                  helperText={isValid.firstname.message}
                 />
               </Grid>
               <Grid item xs={12} sm={6}>
