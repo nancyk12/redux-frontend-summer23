@@ -1,14 +1,19 @@
 const checker = (key, value) => {
     switch (key) {
-        // case 'firstname':
-            
-        //     return {
-        //         error: false,
-        //         message: ''
-        //     };
+        case 'firstname':
+            if (value === ''){
+                return {
+                    error: true,
+                    message: 'Cannot be Empty'
+                }
+            }
+            return {
+                error: false,
+                message: ''
+            };
 
         default:
-            return {error: false, message: 'Hello'}
+            return {error: false, message: ''}
     }
 }
 
