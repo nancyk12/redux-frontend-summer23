@@ -134,6 +134,8 @@ export default function Register() {
                   label="Last Name"
                   name="lastName"
                   autoComplete="family-name"
+                  error={isValid.lastname.error}
+                  helperText={isValid.lastname.message}
                 />
               </Grid>
               <Grid item xs={12}>
@@ -144,7 +146,8 @@ export default function Register() {
                   label="Email Address"
                   name="email"
                   autoComplete="email"
-                  // error={true}
+                  error={isValid.email.error}
+                  helperText={isValid.email.message}
                 />
               </Grid>
               <Grid item xs={12}>
@@ -156,6 +159,8 @@ export default function Register() {
                   type="password"
                   id="password"
                   autoComplete="new-password"
+                  error={isValid.password.error}
+                  helperText={isValid.password.message}
                 />
               </Grid>
               <Grid item xs={12}>
