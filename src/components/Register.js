@@ -57,10 +57,37 @@ export default function Register() {
       password: data.get('password'),
     };
 
+    let isErrors = false;
+    
+    if (userObj.password !== data.get('password2')) {
+      isErrors = true
+      setPwdMatch({
+        error: true,
+        message: "Passwords do not Match"
+      })
+    } else {
+      setPwdMatch({
+          error: false,
+          message: ''
+        })
+   
+    }
 
     const validatorObj = registrationValidator(userObj)
+
+  
     
-    setIsValid(validatorObj)
+    // iterates through the validatorObj and checks if there any errors are true
+    for (const key in validatorObj) {
+      if(validatorObj[key].error) {
+        isErrors = true
+      }
+    }
+    
+    isErrors ? setIsValid(validatorObj)
+    : 
+    (userObj.password === data.get('password2')) && dispatch(registerUser(userObj))
+
 
   //  (userObj.password !== data.get('password2')) ?
   //     setPwdMatch({
@@ -73,18 +100,6 @@ export default function Register() {
   //         message: ''
   //       })
     
-    if (userObj.password !== data.get('password2')) {
-      setPwdMatch({
-        error: true,
-        message: "Passwords do not Match"
-      })
-    } else {
-      setPwdMatch({
-          error: false,
-          message: ''
-        })
-      dispatch(registerUser(userObj))
-    }
 
     
       
