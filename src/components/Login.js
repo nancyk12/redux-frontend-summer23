@@ -82,6 +82,9 @@ export default function Login() {
           <Typography component="h1" variant="h5">
             Login
           </Typography>
+          <Typography component="h2" variant="h6" sx={{color: 'red'}}>
+            {users.message}
+          </Typography>
           <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
             <TextField
               margin="normal"
@@ -92,6 +95,7 @@ export default function Login() {
               name="email"
               autoComplete="email"
               autoFocus
+              // helperText={users.message}
             />
             <TextField
               margin="normal"
