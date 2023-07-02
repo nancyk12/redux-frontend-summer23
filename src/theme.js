@@ -19,13 +19,22 @@ const theme = createTheme({
 
     // }
     palette:{
-        mode: 'dark',
+        // mode: 'dark',
         primary: {
-            main: purple[700],
+            main: '#685454',  //chocolate
         },
         secondary: {
-            main: '#40ff00',
-        }
+            main: '#EA8A8A', //raspberry
+        },
+        tertiary: {
+            main: '#F5E4C3', //sand
+        },
+        error: {
+            main: '#EE4B2B', //red
+        },
+        background: {
+            default: '#fff',
+        },
     }
 })
 
