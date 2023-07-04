@@ -57,37 +57,10 @@ export default function Register() {
       password: data.get('password'),
     };
 
-    let isErrors = false;
-    
-    if (userObj.password !== data.get('password2')) {
-      isErrors = true
-      setPwdMatch({
-        error: true,
-        message: "Passwords do not Match"
-      })
-    } else {
-      setPwdMatch({
-          error: false,
-          message: ''
-        })
-   
-    }
 
     const validatorObj = registrationValidator(userObj)
-
-  
     
-    // iterates through the validatorObj and checks if there any errors are true
-    for (const key in validatorObj) {
-      if(validatorObj[key].error) {
-        isErrors = true
-      }
-    }
-    
-    isErrors ? setIsValid(validatorObj)
-    : 
-    (userObj.password === data.get('password2')) && dispatch(registerUser(userObj))
-
+    setIsValid(validatorObj)
 
   //  (userObj.password !== data.get('password2')) ?
   //     setPwdMatch({
@@ -100,6 +73,18 @@ export default function Register() {
   //         message: ''
   //       })
     
+    if (userObj.password !== data.get('password2')) {
+      setPwdMatch({
+        error: true,
+        message: "Passwords do not Match"
+      })
+    } else {
+      setPwdMatch({
+          error: false,
+          message: ''
+        })
+      dispatch(registerUser(userObj))
+    }
 
     
       
@@ -149,8 +134,6 @@ export default function Register() {
                   label="Last Name"
                   name="lastName"
                   autoComplete="family-name"
-                  error={isValid.lastname.error}
-                  helperText={isValid.lastname.message}
                 />
               </Grid>
               <Grid item xs={12}>
@@ -161,8 +144,7 @@ export default function Register() {
                   label="Email Address"
                   name="email"
                   autoComplete="email"
-                  error={isValid.email.error}
-                  helperText={isValid.email.message}
+                  // error={true}
                 />
               </Grid>
               <Grid item xs={12}>
@@ -174,8 +156,6 @@ export default function Register() {
                   type="password"
                   id="password"
                   autoComplete="new-password"
-                  error={isValid.password.error}
-                  helperText={isValid.password.message}
                 />
               </Grid>
               <Grid item xs={12}>
