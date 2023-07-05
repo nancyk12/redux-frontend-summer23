@@ -1,4 +1,7 @@
 import React, { useState } from 'react';
+import IconButton from '@mui/material/IconButton';
+import Visibility from '@mui/icons-material/Visibility';
+import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -31,7 +34,7 @@ export default function Register() {
       navigate("/login", {replace: true})
     }
   })
-
+  const [showPassword, setShowPassword] = useState(false);
   const [pwdMatch, setPwdMatch] = useState({
     error: false,
     message: ''
@@ -134,6 +137,8 @@ export default function Register() {
                   label="Last Name"
                   name="lastName"
                   autoComplete="family-name"
+                  error={isValid.lastname.error}
+                  helperText={isValid.lastname.message}
                 />
               </Grid>
               <Grid item xs={12}>
@@ -144,31 +149,52 @@ export default function Register() {
                   label="Email Address"
                   name="email"
                   autoComplete="email"
-                  // error={true}
+                  error={isValid.email.error}
+                  helperText={isValid.email.message}
                 />
               </Grid>
               <Grid item xs={12}>
                 <TextField
+                  margin="normal"
                   required
                   fullWidth
                   name="password"
                   label="Password"
-                  type="password"
+                  type={showPassword ? 'text' : 'password'}
                   id="password"
-                  autoComplete="new-password"
+                  autoComplete="current-password"
+                  InputProps={{
+                    endAdornment: (
+                      <IconButton
+                        onClick={() => setShowPassword(!showPassword)}
+                        edge="end"
+                      >
+                        {showPassword ? <VisibilityOff /> : <Visibility />}
+                      </IconButton>
+                    ),
+                  }}
                 />
               </Grid>
               <Grid item xs={12}>
                 <TextField
+                  margin="normal"
                   required
                   fullWidth
-                  name="password2"
-                  label="Confirm Password"
-                  type="password"
-                  id="password2"
-                  autoComplete="new-password"
-                  error={pwdMatch.error}
-                  helperText={pwdMatch.message}
+                  name="password"
+                  label="Password"
+                  type={showPassword ? 'text' : 'password'}
+                  id="password"
+                  autoComplete="current-password"
+                  InputProps={{
+                    endAdornment: (
+                      <IconButton
+                        onClick={() => setShowPassword(!showPassword)}
+                        edge="end"
+                      >
+                        {showPassword ? <VisibilityOff /> : <Visibility />}
+                      </IconButton>
+                    ),
+                  }}
                 />
               </Grid>
               {/* <Grid item xs={12}>
