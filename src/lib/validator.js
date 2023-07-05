@@ -46,17 +46,17 @@ const checker = (key, value) => {
             return {error: false, message: ''}
         
         case "password":
-            //The Password needs to be between 6-10 characters, with at least 1 lowercase letter1 uppercase letter, 1 number, and 1 special character.  examples: 1A2a$5, 1234557Tt#, Tsd677%
+        //    password = abc123
 
             //code for password complexity, need to uncomment
-        // let pwdRegEx = new RegExp(/^(?=.*[0-9]+.*)(?=.*[a-zA-Z]+.*)[0-9a-zA-Z]{6,}$/)
-        // if (!pwdRegEx.test(value)) {
-        //     return {
-        //         error: true, 
-        //         message: "Password must be complex"
-        //     }
-        //    } 
-        // return {error: false, message: ''}
+        let pwdRegEx = new RegExp(/^(?=.*[0-9]+.*)(?=.*[a-zA-Z]+.*)[0-9a-zA-Z]{6,}$/)
+        if (!pwdRegEx.test(value)) {
+            return {
+                error: true, 
+                message: "Password must be 6-9 characters, non-case sensitive letter, and numbers"
+            }
+           } 
+        return {error: false, message: ''}
         
         default:
          if (value === ''){
