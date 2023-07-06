@@ -4,6 +4,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { login, resetStatus } from '../redux/usersSlice';
 import { CircularProgress } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
+import Visibility from '@mui/icons-material/Visibility';
+import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import './Login.css';
 
 export default function Login() {
@@ -36,9 +38,9 @@ export default function Login() {
   };
 
   return (
-    <div className="container">
-      <div className="form-container">
-        <h1 className="form-heading">Login</h1>
+    <div className="login-container">
+      <div className="login-form-container">
+        <h1 className="login-form-heading">Login</h1>
         <form onSubmit={handleSubmit} noValidate>
           <input
             type="text"
@@ -48,52 +50,53 @@ export default function Login() {
             placeholder="Email Address"
             autoComplete="email"
             autoFocus
-            className="input-field"
+            className="login-input-field"
           />
-          <input
-            type={showPassword ? 'text' : 'password'}
-            required
-            id="password"
-            name="password"
-            placeholder="Password"
-            className="input-field"
-          />
-          <div className="password-toggle">
+
+         <div className="login-password-input-container">
+            <input
+              type={showPassword ? 'text' : 'password'}
+              required
+              id="password"
+              name="password"
+              placeholder="Password"
+              className="login-input-field"
+            />
             <button
               type="button"
               onClick={() => setShowPassword(!showPassword)}
-              className="password-toggle-button"
+              className="login-password-toggle-button"
             >
-              {showPassword ? 'Hide Password' : 'Show Password'}
+              {showPassword ? <VisibilityOff /> : <Visibility />}
             </button>
           </div>
-          <label htmlFor="remember" className="checkbox-label">
+          <label htmlFor="remember" className="login-checkbox-label">
             <input
               type="checkbox"
               checked={isChecked}
               onChange={() => setIsChecked(!isChecked)}
               id="remember"
               name="remember"
-              className="checkbox-input"
+              className="login-checkbox-input"
             />
             Remember me
           </label>
           <button
             type="submit"
-            className={`submit-button ${status === 'pending' ? 'loading' : ''}`}
+            className={`login-submit-button ${status === 'pending' ? 'loading' : ''}`}
           >
             {status === 'pending' ? (
-              <CircularProgress size={24} className="loading-spinner" />
+              <CircularProgress size={24} className="login-loading-spinner" />
             ) : (
               'Sign In'
             )}
           </button>
         </form>
-        <div className="links">
-          <Link href="#" className="link">
+        <div className="login-links">
+          <Link href="#" className="login-link">
             Forgot password?
           </Link>
-          <Link to="/register" className="link">
+          <Link to="/register" className="login-link">
             Don't have an account? Register Here!
           </Link>
         </div>
