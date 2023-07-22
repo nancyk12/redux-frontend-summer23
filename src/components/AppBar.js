@@ -1,4 +1,5 @@
 import * as React from 'react';
+import {NavLink} from 'react-router-dom';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
@@ -14,16 +15,19 @@ import MenuItem from '@mui/material/MenuItem';
 import AdbIcon from '@mui/icons-material/Adb';
 import {useSelector, useDispatch} from 'react-redux'
 import {logout} from '../redux/authSlice'
+import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
+import { useNavigate } from "react-router-dom";
+//import { useAuth } from '../Hooks/Auth';
 
 
-const pages = ['Products', 'Cart'];
+const pages = ['Products', 'Cart', 'Posts', 'new-blogs'];
 const settings = ['Profile', 'Account', 'Security', 'Logout'];
 
 function ResponsiveAppBar() {
 
   const dispatch = useDispatch()
   const auth = useSelector(state => state.auth.isAuth)
-
+  const navigate = useNavigate()
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
   
@@ -39,6 +43,10 @@ function ResponsiveAppBar() {
     setAnchorElNav(null);
   };
 
+  const redirectToPage = (e) => {
+    const page = e.target.value.toLowerCase().replace(' ', '-')
+    navigate(`/${page}`)
+  }
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
   };
@@ -66,7 +74,7 @@ function ResponsiveAppBar() {
               fontFamily: 'monospace',
               fontWeight: 700,
               letterSpacing: '.3rem',
-              color: 'inherit',
+              color: '#F5E4C3',
               textDecoration: 'none',
             }}
           >
@@ -80,9 +88,9 @@ function ResponsiveAppBar() {
               aria-controls="menu-appbar"
               aria-haspopup="true"
               onClick={handleOpenNavMenu}
-              color="inherit"
+              color="#F5E4C3"
             >
-              <MenuIcon />
+              <MenuIcon color="#F5E4C3"/>
             </IconButton>
             <Menu
               id="menu-appbar"
@@ -103,13 +111,13 @@ function ResponsiveAppBar() {
               }}
             >
               {pages.map((page) => (
-                <MenuItem key={page} onClick={handleCloseNavMenu}>
-                  <Typography textAlign="center">{page}</Typography>
-                </MenuItem>
-              ))}
+                    <MenuItem key={page} value={page} onClick={() => navigate(`/${page.toLowerCase().replace(' ', '-')}`)}>
+                        <Typography textAlign="center" >{page}</Typography>
+                    </MenuItem>
+                ))}
             </Menu>
           </Box>
-          <AdbIcon sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }} />
+          <AdbIcon color="#F5E4C3" sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }} />
           <Typography
             variant="h5"
             noWrap
@@ -122,22 +130,25 @@ function ResponsiveAppBar() {
               fontFamily: 'monospace',
               fontWeight: 700,
               letterSpacing: '.3rem',
-              color: 'inherit',
+              color: 'white',
               textDecoration: 'none',
             }}
           >
             LOGO
           </Typography>
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
-            {pages.map((page) => (
-              <Button
-                key={page}
-                onClick={handleCloseNavMenu}
-                sx={{ my: 2, color: 'white', display: 'block' }}
-              >
-                {page}
-              </Button>
-            ))}
+          {pages.map((page) => (
+                <Button
+                    key={page}
+                    value={page}
+                    onClick={(e) => {
+                        redirectToPage(e)
+                    }}
+                    sx={{ my: 1, color: 'white', display: 'block' }}
+                >
+                    {page}
+                </Button>
+                ))}
           </Box>
         { auth &&
           <Box sx={{ flexGrow: 0 }}>
@@ -162,14 +173,29 @@ function ResponsiveAppBar() {
               open={Boolean(anchorElUser)}
               onClose={handleCloseUserMenu}
             >
-              {settings.map((setting) => (
-                <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                  <Typography
-                   onClick = {() => onMenuClick(setting)} 
-                   textAlign="center"
-                   >{setting}</Typography>
-                </MenuItem>
-              ))}
+              {auth.isAdmin && <MenuItem onClick={handleCloseUserMenu}>
+                                    <Typography textAlign="center" onClick={() => navigate('add-product')}>Add Product</Typography>
+                                </MenuItem>
+                } 
+
+{settings.map((setting) => (
+                    <MenuItem key={setting} onClick={handleCloseUserMenu}>
+                    <Typography textAlign="center">{setting}</Typography>
+                    </MenuItem>
+                ))}
+
+                    {!auth.userToken && <MenuItem onClick={handleCloseUserMenu}>
+                            <Typography textAlign="center" onClick={() => navigate('/login')}>Login</Typography>
+                        </MenuItem>
+                    }
+
+                    {auth.userToken && <MenuItem onClick={handleCloseUserMenu}>
+                            <Typography textAlign="center" onClick={() => {
+                                auth.logout()
+                                navigate('/')
+                            }}>Logout</Typography>
+                        </MenuItem>
+                    }
             </Menu>
           </Box>
           }
