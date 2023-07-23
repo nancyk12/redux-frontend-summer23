@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { addNewBlog } from './blogSlice';
+import "../posts/Blogs.css";
 
 const BlogForm = () => {
   const dispatch = useDispatch();

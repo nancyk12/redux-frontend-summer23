@@ -5,6 +5,7 @@ import { fetchBlogs, selectAllBlogs } from './blogSlice';
 // import { selectAllBlogs } from './blogSlice';
 import TimeAgo from '../posts/TimeAgo';
 import BlogReactionButtons from "./BlogReactionButtons";
+import BlogForm from "./BlogForm";
 import "../posts/Blogs.css";
 
 const BlogList = () => {
@@ -19,6 +20,10 @@ const dispatch = useDispatch();
 
   return (
     <div >
+      <h1>Blog Form</h1>
+      <div className="section">
+        <BlogForm/>
+      </div>
       <h1>Blog List</h1>
       {/* <ul>
         {blogs.map((blog) => (
@@ -35,12 +40,13 @@ const dispatch = useDispatch();
       </ul> */}
       
       <div className="section">
-      {blogs.map((blog, index) => (
+      {blogs.map((blog) => (
           <div className="article" key={blog.id}>
             <h2>{blog.title}</h2>
             <p className="excerpt">{blog.text.substring(0, 75)}...</p>
             <div className="postCredit">
                 <Link to={`/blogs/get-one-blog/${blog.id}`}>View Post</Link>
+                <Link to={`/edit/${blog.id}`}>Edit Blog</Link>
                 {/* <PostAuthor userId={post.userId} /> */}
                 <span>{blog.author}</span>
                 <TimeAgo timestamp={blog.createAt} />

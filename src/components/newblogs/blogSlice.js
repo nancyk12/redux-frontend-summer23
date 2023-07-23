@@ -6,7 +6,7 @@ import { v4 as uuidv4 } from 'uuid';
 
 const initialState = {
   blogs: [],
-  singleBlog: null,
+  // singleBlog: null,
   status: 'idle',
   error: null,
 };
@@ -52,31 +52,9 @@ const blogSlice = createSlice({
   name: 'blogs',
   initialState,
   reducers: {
-    blogAdded:{
-      reducer(state, action){
-        state.blogs.push(action.payload)
+    blogAdded:(state, action) => {
+        state.blogs.push(action.payload);
       },
-      prepare(title, text, author){
-        return{
-          payload: {
-            id: uuidv4(),
-            title,
-            text,
-            createAt: new Date().toISOString(),
-            author,
-            reactions: {
-              thumbsUp: 0,
-              wow: 0,
-              heart: 0,
-              rocket: 0,
-              coffee: 0
-
-            }
-
-          }
-        }
-      }
-    },
     reactionAdded(state, action) {
       const { blogId, reaction } = action.payload
       const existingBlog = state.blogs.find(blog => blog.id === blogId)
@@ -84,7 +62,6 @@ const blogSlice = createSlice({
         existingBlog.reactions[reaction]++
       }
     }
-
   },
   extraReducers(builder) {
     builder
@@ -150,25 +127,28 @@ const blogSlice = createSlice({
        const blogs = state.blogs.filter(blog => blog.id !== id);
        state.blogs = [...blogs, action.payload];
                 })
-                .addCase(deleteBlog.fulfilled, (state, action) => {
-                    if (!action.payload?.id) {
-                        console.log('Delete could not complete')
-                        console.log(action.payload)
-                        return;
-                    }
-                    const { id } = action.payload;
-                    const blogs = state.blogs.filter(blog => blog.id !== id);
-                    state.blogs = blogs;
-                })
+      .addCase(deleteBlog.fulfilled, (state, action) => {
+        if (!action.payload?.id) {
+            console.log('Delete could not complete')
+            console.log(action.payload)
+            return;
+        }
+        const { id } = action.payload;
+        const blogs = state.blogs.filter(blog => blog.id !== id);
+        state.blogs = blogs;
+        })
         }
     })
     
-    export const selectAllBlogs = (state) => state.blogSlice.blogs;
+    export const selectAllBlogs = (state) => state.blogs.blogs;
     export const getBlogsStatus = (state) => state.blogs.status;
     export const getBlogsError = (state) => state.blogs.error;
     
-    export const selectBlogById = (state, blogId) =>
-        state.blogs.blogs.find(blog => blog.id === blogId);
+    export const selectBlogById = (state, blogId) => {
+      //console.log(state); // Check the entire state object
+      console.log(state.blogs); // Check if the 'blogs' property is defined
+      return state.blogs.blogs.find(blog => blog.id === blogId);
+    };
     
     export const { blogAdded, reactionAdded } = blogSlice.actions
     

@@ -9,7 +9,7 @@ const BlogDetail = () => {
   );
 
   if (!blog) {
-    return <div>Loading...</div>;
+    return <div>Not found! Fix your code, Nancy!...</div>;
   }
 
   return (

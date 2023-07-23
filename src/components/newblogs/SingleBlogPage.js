@@ -1,46 +1,48 @@
 import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useParams, Link } from 'react-router-dom';
-import { selectBlogById, fetchSingleBlog, selectAllBlogs} from './blogSlice';
+import { fetchSingleBlog, selectBlogById, getBlogsStatus, getBlogsError } from './blogSlice';
 import TimeAgo from '../posts/TimeAgo';
 import BlogReactionButtons from './BlogReactionButtons';
 
-
 const SingleBlogPage = () => {
-  const { blogId } = useParams();
-
-  const blog = useSelector((state) => selectAllBlogs(state).find(blog => blog.id === Number(blogId)));
-  // const blog = useSelector((state) => state.blogSlice.singleBlog);
+  const { id } = useParams();
   const dispatch = useDispatch();
 
   useEffect(() => {
-  //   dispatch(fetchSingleBlog(id));
-  // }, [dispatch, id]);
-  if (!blog) {
-    dispatch(fetchSingleBlog(blogId));
-    }
-  }, [dispatch,blog, blogId]);
+    dispatch(fetchSingleBlog(id));
+  }, [dispatch, id]);
 
-  if (!blog) {
-    return (
-      <section>
-        <h2>Post not found! Work on your code, Nancy!</h2>
-      </section>
-    );
+const singleBlog = useSelector((state) => selectBlogById(state, id));
+const status = useSelector(getBlogsStatus);
+const error = useSelector(getBlogsError);
+
+  if (status === 'loading') {
+  return <div className="section" >Loading...</div>;
+  }
+
+  if (error) {
+  return <div className="section">Error: {error}</div>;
+  }
+
+  if (!singleBlog) {
+  return  <div className="section">
+            <h2>Post not found! Work on your code, Nancy!</h2>
+          </div>
   }
 
 
   return (
-    <article>
-      <h1>{blog.title}</h1>
-      <p>{blog.text}</p>
+    <div className="artlicle">
+      <h1>{singleBlog.title}</h1>
+      <p>{singleBlog.text}</p>
       <p className="postCredit">
-         <Link to={`/blog/edit/${blog.id}`}>Edit Post</Link>
-         Author: {blog.author}
-        <TimeAgo timestamp={blog.createAt}/>
+         {/* <Link to={`/blog/edit/${SingleBlog.id}`}>Edit Post</Link> */}
+         Author: {singleBlog.author}
+        <TimeAgo timestamp={singleBlog.createAt}/>
       </p>
-      <BlogReactionButtons blog={blog}/>
-    </article>
+      <BlogReactionButtons blog={singleBlog}/>
+    </div>
   );
 };
 

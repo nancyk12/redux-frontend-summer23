@@ -12,6 +12,6 @@ export default configureStore({
         auth: authReducer,
         counter: counterReducer,
         // posts: postsReducer,
-        blogSlice: blogReducer
+        blogs: blogReducer
     }
 })
