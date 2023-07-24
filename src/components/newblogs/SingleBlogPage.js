@@ -37,10 +37,11 @@ const error = useSelector(getBlogsError);
       <h1>{singleBlog.title}</h1>
       <p>{singleBlog.text}</p>
       <p className="postCredit">
-         {/* <Link to={`/blog/edit/${SingleBlog.id}`}>Edit Post</Link> */}
+         {/* <Link to={`/edit/${SingleBlog._id}`}>Edit Post</Link> */}
          Author: {singleBlog.author}
         <TimeAgo timestamp={singleBlog.createAt}/>
       </p>
+      <Link to={`/edit/${singleBlog.id}`}>Edit Blog</Link> {/* Add link to Edit Blog page */}
       <BlogReactionButtons blog={singleBlog}/>
     </div>
   );

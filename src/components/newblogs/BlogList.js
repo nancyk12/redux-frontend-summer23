@@ -2,20 +2,18 @@ import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { fetchBlogs, selectAllBlogs } from './blogSlice';
-// import { selectAllBlogs } from './blogSlice';
 import TimeAgo from '../posts/TimeAgo';
 import BlogReactionButtons from "./BlogReactionButtons";
 import BlogForm from "./BlogForm";
 import "../posts/Blogs.css";
+import EditBlog from "./EditBlog";
 
-const BlogList = () => {
-// const blogs = useSelector((state) => state.blogs.blogs);
+const BlogList = (  ) => {
 const blogs = useSelector(selectAllBlogs);
 const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(fetchBlogs());
-    // dispatch(selectAllBlogs());
   }, [dispatch]);
 
   return (

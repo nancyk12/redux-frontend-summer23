@@ -21,12 +21,19 @@ import Counter from './components/posts/Counter';
 //new blog
 import BlogLayout from './components/newblogs/BlogLayout';
 import BlogForm from './components/newblogs/BlogForm';
-// import BlogDetail from './components/newblogs/BlogDetail';
+import EditBlog from './components/newblogs/EditBlog';
 import BlogList from './components/newblogs/BlogList';
 import SingleBlogPage from './components/newblogs/SingleBlogPage';
 import { fetchBlogs } from './components/newblogs/blogSlice';
 
+
 function App() {
+
+  const blogs = [
+    { id: 1, title: 'Blog 1', text: 'Blog 1 text', author: 'Author 1' },
+    { id: 2, title: 'Blog 2', text: 'Blog 2 text', author: 'Author 2' },
+    // Add more blogs here...
+  ];
   const router = createBrowserRouter([
     {
       path: "/",
@@ -48,11 +55,12 @@ function App() {
         { path: "/new-blogs", 
            element: <BlogLayout />,
            children: [
-          { index: "/blog-list", element: <BlogList /> },
+          { index: "/blog-list", element: <BlogList blogs={blogs}/> },
         ] },
         
         { path: "/blogs/get-one-blog/:id", element: <SingleBlogPage /> },
-        // { path: "/blog-form", element: <BlogForm /> },
+        { path: "/blog-form", element: <BlogForm /> },
+        { path: "/edit/:blogId", element: <EditBlog/>},
 
         // { path: "/blog-detail/:id", element: <BlogDetail /> },
 

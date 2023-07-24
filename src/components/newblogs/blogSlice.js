@@ -29,7 +29,7 @@ export const addNewBlog = createAsyncThunk('/blogs/addNewBlog', async (blogData)
 export const updateBlog = createAsyncThunk('blogs/updateBlog', async (initialPost) => {
     const { id } = initialPost;
     try {
-        const response = await Axios.put(`/blogs/update-by-id$/${id}`, initialPost)
+        const response = await Axios.put(`/blogs/update-by-id/${id}`, initialPost)
         return response.data
     } catch (err) {
         //return err.message;
