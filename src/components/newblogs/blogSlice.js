@@ -35,7 +35,7 @@ export const updateBlog = createAsyncThunk('blogs/updateBlog', async (initialPos
         //return err.message;
         return initialPost; // only for testing Redux!
     }
-})
+});
 
 export const deleteBlog = createAsyncThunk('/blogs/deleteBlog', async (initialPost) => {
     const { id } = initialPost;

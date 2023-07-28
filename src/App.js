@@ -56,13 +56,14 @@ function App() {
            element: <BlogLayout />,
            children: [
           { index: "/blog-list", element: <BlogList blogs={blogs}/> },
+          
         ] },
-        
-        { path: "/blogs/get-one-blog/:id", element: <SingleBlogPage /> },
+        { path: "/blogs/get-one-blog/:id", element: <SingleBlogPage /> }, 
         { path: "/blog-form", element: <BlogForm /> },
         { path: "/edit/:blogId", element: <EditBlog/>},
 
-        // { path: "/blog-detail/:id", element: <BlogDetail /> },
+
+        
 
 
         // Posts
